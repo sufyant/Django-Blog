@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h3 class="mt-4">{{ article.title }}</h3>
+
+        <!-- Author -->
+        <p class="lead">
+          by {{ article.author.username }}
+        </p>
+        <hr>
+
+        <!-- Date/Time -->
+        <p>{{ article.created_date }}</p>
+        <hr>
+          
+        {% if article.article_image %}
+            <!-- Preview Image -->
+            <img class="img-fluid rounded" src="{{ article.article_image.url }}" alt="">
+            <hr>
+        {% endif %}
+
+        <!-- Post Content -->
+        <p class="lead">
+            {{ article.content | safe}}
+        </p>
+        <hr>
+
+
+
+        {% if comments %}
+            <h4>Yorumlar</h4>
+            <hr>
+            {% for comment in comments %}
+                <div class="media mb-4">
+                    <img src="https://icon-library.net//images/50x50-icon/50x50-icon-0.jpg" width="40" height="40" />
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ comment.comment_author }}</h5>
+                        {{ comment.comment_date }}
+                        <br>
+                        {{ comment.comment_content }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+          <div class="alert alert-danger">
+            Bu makalede yorum bulunmamıştır. İlk yapan siz olun!
+          </div>
+        {% endif %}
+        <!-- Comments Form -->
+          <div class="card my-4">
+                  <h5 class="card-header">Yorum Ekle:</h5>
+                  <div class="card-body">
+                    <form action="{% url "article:comment" article.id %}" method="post">
+                    {% csrf_token %}
+                        <div class="form-group">
+                            <label>İsim</label>
+                            <input name="comment_author" class="form-control" placeholder="İsminizi giriniz...">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Yorum</label>
+                            <textarea name="comment_content" class="form-control" placeholder="Yorum giriniz..."></textarea>
+                        </div>
+
+                      <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+
+                  </div>
+            </div>
+
+
+      </div>
+    </div>
+
+
+
+
+{% endblock %}

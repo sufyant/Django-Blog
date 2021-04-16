@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+    <h3>Kayıt Ol</h3>
+    <hr>
+
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+          <label for="username">Username</label>
+          <input class="form-control" type="text" id="username" name="username" value="">
+          {{ form.errors.username }}
+
+          <label for="password">Password</label>
+          <input class="form-control" type="password" id="password" name="password">
+          {{ form.errors.password }}
+
+          <label for="confirm">Confirm Password</label>
+          <input class="form-control" type="password" id="confirm" name="confirm">
+          {{ form.errors.confirm }}
+        </fieldset>
+        <br>
+        <button type="submit" class="btn btn-success">Kayıt Ol</button>
+    </form>
+
+        </div>
+    </div>
+
+{% endblock %}
